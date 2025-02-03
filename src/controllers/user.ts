@@ -28,6 +28,7 @@ const signup = async (req: Request, res: Response): Promise<void> => {
       res.status(StatusCodes.CONFLICT).json({
         message: `User with the email ${email} already exists.`,
       });
+      return;
     }
 
     // Hash password
@@ -42,6 +43,10 @@ const signup = async (req: Request, res: Response): Promise<void> => {
     await newUser.save();
 
     // handle otp
+
+    res.status(StatusCodes.OK).json({
+      message: `User ${email} registered successfully`,
+    });
   } catch (error: any) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       message: error.message || "Internal Server Error",
