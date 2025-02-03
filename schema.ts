@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
@@ -46,11 +46,11 @@ const Tools = new Schema({
 });
 
 // Wallet tab
-const Withdraw = new Schema({
-  transactionId: { type: String, required: true },
-  createdAt: { type: Date, required: true, default: new Date() },
-  amount: { type: mongoose.Decimal128, default: 0.0, required: true },
-  status: { type: String, required: true, default: "Requested" },
-});
+// const Withdraw = new Schema({
+//   transactionId: { type: String, required: true },
+//   createdAt: { type: Date, required: true, default: new Date() },
+//   amount: { type: mongoose.Decimal128, default: 0.0, required: true },
+//   status: { type: String, required: true, default: "Requested" },
+// });
 
-module.exports = { User };
+export = { User };

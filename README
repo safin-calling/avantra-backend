@@ -1,4 +1,1 @@
-Stack: NodeJS
-
-Todo
-- add DDOS protection
+Stack: ExpressJS, MongoDB
