@@ -93,24 +93,42 @@ app.post("/forgot-password", async (req, res) => {
 // tools
 app.get("/tools/", (req, res) => {
   // get tools from DB
-  const tools = ["EW", "PM", "SA", "C", "NF"];
-  res.send(tools);
-});
+  const tools = [
+    {
+      id: "ew",
+      name: "Emotional Wellbeing",
+    },
+    {
+      id: "pm",
+      name: "Positive Mindset",
+    },
+    {
+      id: "sa",
+      name: "Self Awareness",
+    },
+    {
+      id: "c",
+      name: "Creativity",
+    },
+    {
+      id: "nf",
+      name: "Nutrition & Food",
+    },
+  ];
 
-app.get("/tools/:tool", (req, res) => {
-  // get tools from DB
-  const tools = ["EW", "PM", "SA", "C", "NF"];
+  const { id } = req?.query || {};
 
-  const { tool } = req?.params || {};
+  if (!id) return res.send(tools);
 
-  if (!tool || !tools.includes(tool)) {
+  const tool = tools.find((t) => t.id === id);
+
+  if (!tool) {
     res.status(404).send({
       message: "Tool not found",
     });
   }
 
-  // get tool content from DB
-  res.status(200).send({ tool });
+  res.status(200).send(tool);
 });
 
 const toolUploadFields = upload.fields([
