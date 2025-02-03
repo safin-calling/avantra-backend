@@ -15,7 +15,6 @@ const User = new Schema({
   referralCode: String,
   // auth
   passwordHash: { type: String, required: true },
-  salt: { type: String, required: true },
   accountStatus: { type: String, default: "Active", required: true },
 });
 
@@ -24,16 +23,6 @@ const Referral = new Schema({
 });
 
 // Tools tab
-const Tools = new Schema({
-  list: [Tool],
-});
-
-const Tool = new Schema({
-  name: { type: String, required: true },
-  videos: [Video],
-  files: [File],
-});
-
 const Video = new Schema({
   title: { type: String, required: true },
   url: { type: String, required: true },
@@ -46,6 +35,16 @@ const File = new Schema({
   downloads: { type: Number, default: 0, required: true },
 });
 
+const Tool = new Schema({
+  name: { type: String, required: true },
+  videos: [Video],
+  files: [File],
+});
+
+const Tools = new Schema({
+  list: [Tool],
+});
+
 // Wallet tab
 const Withdraw = new Schema({
   transactionId: { type: String, required: true },
@@ -53,3 +52,5 @@ const Withdraw = new Schema({
   amount: { type: mongoose.Decimal128, default: 0.0, required: true },
   status: { type: String, required: true, default: "Requested" },
 });
+
+module.exports = { User };

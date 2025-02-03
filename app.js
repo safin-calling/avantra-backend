@@ -1,8 +1,3 @@
-// const mongoose = require("mongoose");
-
-// mongoose.connect('mongodb://localhost:27017/')
-//     .then(() => console.log("Connected!"))
-
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -10,6 +5,7 @@ const {
   handleSignIn,
   handleForgotPassword,
   capitalizeFirstLetter,
+  handleSignUp,
 } = require("./functions");
 const rateLimit = require("express-rate-limit");
 const multer = require("multer");
@@ -33,6 +29,42 @@ app.use(cors());
 app.use(express.json());
 const upload = multer({ dest: "./tools" });
 // config
+
+// sign up
+app.post("/sign-up", async (req, res) => {
+  const { name, email, password } = req?.body || {};
+
+  if (!name || name === "") {
+    return res.status(400).json({
+      message: "Name is required",
+    });
+  }
+
+  if (!email) {
+    return res.status(400).json({
+      message: "Email is required",
+    });
+  }
+
+  if (!password) {
+    return res.status(400).json({
+      message: "Password is required",
+    });
+  }
+
+  try {
+    const response = await handleSignUp(name, email, password);
+
+    res.status(200).send({
+      success: true,
+      message: response,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error.message || error.toString() || "An error occurred",
+    });
+  }
+});
 
 // sign in
 app.post("/sign-in", async (req, res) => {
@@ -61,7 +93,7 @@ app.post("/sign-in", async (req, res) => {
     });
   } catch (error) {
     res.status(400).send({
-      message: error,
+      message: error.message || error.toString() || "An error occurred",
     });
   }
 });
